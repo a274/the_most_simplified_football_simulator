@@ -234,9 +234,7 @@ public class MyView extends View {
         Log.v("RED TEAM ", "goals: " + countTeamRED);
         return countTeamRED;
     }
-    
-    git branch -M master
-    git push -u origin master
+
     public int getCountTeamBLUE() {
         if (yBall < 5 && xBall < getWidth() * 3 / 4 && xBall > getWidth() / 4) countTeamBLUE++;
         Log.v("BLUE TEAM ", "goals: " + countTeamBLUE);
