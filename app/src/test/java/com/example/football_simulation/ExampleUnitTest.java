@@ -1,4 +1,4 @@
-package com.example.simpleanimation;
+package com.example.football_simulation;
 
 import org.junit.Test;
 

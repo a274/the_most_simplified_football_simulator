@@ -1,4 +1,4 @@
-package com.example.simpleanimation;
+package com.example.football_simulation;
 
 public class Coordinates {
     float x;

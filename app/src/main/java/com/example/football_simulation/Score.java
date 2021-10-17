@@ -1,4 +1,4 @@
-package com.example.simpleanimation;
+package com.example.football_simulation;
 
 public class Score {
     private int countTeamRED = 0;
@@ -12,12 +12,12 @@ public class Score {
         return countTeamBLUE;
     }
 
-    public int incR() {
-        return ++countTeamRED;
+    public void incR() {
+        ++countTeamRED;
     }
 
-    public int incB() {
-        return ++countTeamBLUE;
+    public void incB() {
+        ++countTeamBLUE;
     }
 
     private Score() {}

@@ -1,4 +1,4 @@
-package com.example.simpleanimation;
+package com.example.football_simulation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,23 +6,24 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+
+@SuppressLint("ViewConstructor")
 public class MyView extends View {
+    Score score = Score.getInstance();
     private static final int N = 21;
     private final Paint paint = new Paint();
     private int pause = 0;
     private Ball ball;
     private Footballers footballers;
-    int countTeamRED = 0, countTeamBLUE = 0;
 
-    private final MutableLiveData<Pair<Integer, Integer>> liveData = new MutableLiveData<>();
+    private final MutableLiveData<Score> liveData = new MutableLiveData<>();
 
-    LiveData<Pair<Integer, Integer>> getData() {
+    LiveData<Score> getData() {
         return liveData;
     }
 
@@ -34,7 +35,7 @@ public class MyView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        ball = new Ball(this.getWidth(), this.getHeight());
+        ball = new Ball(this.getWidth(), this.getHeight()); 
         footballers = new Footballers(this.getWidth(), this.getHeight());
         setBackgroundColor(0xFF009900);
         footballers.dotsInit();
@@ -68,7 +69,9 @@ public class MyView extends View {
             ball.kickTheBall();
             ball.setMoved();
         }
-        liveData.setValue(new Pair<>(getCountTeamRED(), getCountTeamBLUE()));
+        goalsRED();
+        goalsBLUE();
+        liveData.setValue(score);
         // готовим массивы x и у для следущего кадра
         footballers.changePosition();
         footballers.moveBlueGoalkeeper();
@@ -118,16 +121,15 @@ public class MyView extends View {
         return false;
     }
 
-    public int getCountTeamRED() {
-        if (Math.abs(ball.getY() - getHeight()) < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f) countTeamRED++;
-        Log.v("RED TEAM ", "goals: " + countTeamRED);
-        return countTeamRED;
+    public void goalsRED() {
+        if (Math.abs(ball.getY() - getHeight()) < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f)
+            score.incR();
+        Log.v("RED TEAM ", "goals: " + score.getCountTeamRED());
     }
 
-    public int getCountTeamBLUE() {
-        if (ball.getY() < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f) countTeamBLUE++;
-        Log.v("BLUE TEAM ", "goals: " + countTeamBLUE);
-        return countTeamBLUE;
+    public void goalsBLUE() {
+        if (ball.getY() < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f)
+            score.incB();
+        Log.v("BLUE TEAM ", "goals: " + score.getCountTeamBLUE());
     }
-
 }
