@@ -24,4 +24,24 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.example.simpleanimation", appContext.getPackageName());
     }
+
+    public void getCounterBlueTeam() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        MyView view = new MyView(appContext);
+        view.yBall = 3;
+        view.xBall = view.getWidth() / 2;
+
+        assertEquals(1, view.countTeamBLUE);
+    }
+
+    public void getCounterRedTeam() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        MyView view = new MyView(appContext);
+        view.yBall = view.getHeight();
+        view.xBall = view.getWidth() / 2;
+
+        assertEquals(1, view.countTeamRED);
+    }
 }
