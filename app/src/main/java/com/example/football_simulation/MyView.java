@@ -20,6 +20,8 @@ public class MyView extends View {
     private int pause = 0;
     private Ball ball;
     private Footballers footballers;
+    private boolean countOnceR = false;
+    private boolean countOnceB = false;
 
     private final MutableLiveData<Score> liveData = new MutableLiveData<>();
 
@@ -35,7 +37,7 @@ public class MyView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        ball = new Ball(this.getWidth(), this.getHeight()); 
+        ball = new Ball(this.getWidth(), this.getHeight());
         footballers = new Footballers(this.getWidth(), this.getHeight());
         setBackgroundColor(0xFF009900);
         footballers.dotsInit();
@@ -122,14 +124,24 @@ public class MyView extends View {
     }
 
     public void goalsRED() {
-        if (Math.abs(ball.getY() - getHeight()) < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f)
-            score.incR();
-        Log.v("RED TEAM ", "goals: " + score.getCountTeamRED());
+        if (Math.abs(ball.getY() - getHeight()) < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f) {
+            if (!countOnceR) {
+                score.incR();
+                countOnceR = true;
+            }
+        } else {
+            countOnceR = false;
+        }
     }
 
     public void goalsBLUE() {
-        if (ball.getY() < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f)
-            score.incB();
-        Log.v("BLUE TEAM ", "goals: " + score.getCountTeamBLUE());
+        if (ball.getY() < 5 && ball.getX() < getWidth() * 3f / 4 && ball.getX() > getWidth() / 4f) {
+            if (!countOnceB) {
+                score.incB();
+                countOnceB = true;
+            }
+        } else {
+            countOnceB = false;
+        }
     }
 }

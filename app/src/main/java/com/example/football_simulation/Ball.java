@@ -12,7 +12,7 @@ public class Ball {
     }
 
     public void kickTheBall() {
-        vBall = new Coordinates((float)(Math.random() * 10 - 3), (float)(Math.random() * 10 - 3));
+        vBall = new Coordinates((float)(Math.random() * 10 - 5), (float)(Math.random() * 10 - 5));
     }
 
     public void moveBall() {
@@ -20,13 +20,17 @@ public class Ball {
         ball.y += vBall.y;
         vBall.x -= 0.01;
         vBall.y -= 0.01;
-        if (ball.x < 0 || ball.x > view.x) {
-            vBall.x = -vBall.x;
+        if (ball.x > view.x) {
+            vBall.x = -Math.abs(vBall.x);
             vBall.x += 0.02;
+        } else if (ball.x < 0) {
+            vBall.x = Math.abs(vBall.x);
         }
-        if (ball.y < 0 || ball.y > view.y) {
-            vBall.y = -vBall.y;
+        if (ball.y > view.y) {
+            vBall.y = -Math.abs(vBall.y);
             vBall.y += 0.02;
+        } else if (ball.y < 0) {
+            vBall.y = Math.abs(vBall.y);
         }
         stopTheBall();
     }
